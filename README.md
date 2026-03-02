@@ -18,11 +18,9 @@ This repository is a personal Rust playground for:
 rust-playground/
 ├── Cargo.toml          # Workspace definition
 ├── snippets/           # Small isolated experiments
-│   └── rust-by-example/
+│   └── hello/          # First crate
 ├── katas/              # Algorithm & competitive practice
-│   └── atcoder/
 ├── mini-projects/      # Practical tools & utilities
-│   └── cli-todo/
 ├── bench/              # Performance experiments
 ├── notes/              # Markdown learning notes
 └── README.md
@@ -39,9 +37,7 @@ This repository uses a Cargo workspace.
 ```toml
 [workspace]
 members = [
-  "mini-projects/cli-todo",
-  "snippets/rust-by-example",
-  "katas/atcoder",
+  "snippets/hello",
 ]
 resolver = "2"
 ```
@@ -53,19 +49,63 @@ resolver = "2"
 Run from the root:
 
 ```bash
+# Run a specific crate
+cargo run -p hello
+
+# Build everything
+cargo build --workspace
+
+# Run tests
+cargo test --workspace
+
 # Format all crates
 cargo fmt
 
 # Lint strictly
 cargo clippy --workspace --all-targets -- -D warnings
+```
 
-# Run tests
-cargo test --workspace
+---
 
-# Build everything
-cargo build --workspace
+# 🎮 How to Play
 
-# Run specific project
+## A. Rustの基礎を体感する
+
+`snippets/hello/src/main.rs` を書き換えて `cargo run -p hello` で実行する。
+わざとコンパイルエラーを起こして、エラーメッセージを読むのが一番の勉強になる。
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1;          // s1 の所有権が s2 に move
+    println!("{}", s2);
+    // println!("{}", s1); // ← コメント外すとコンパイルエラー！
+}
+```
+
+## B. 新しいテーマごとにクレートを追加する
+
+```bash
+cargo new snippets/ownership
+# → ルートの Cargo.toml の members に "snippets/ownership" を追記
+cargo run -p ownership
+```
+
+1テーマ1クレートで `snippets/` に増やしていく。
+
+## C. AtCoderの問題を解く
+
+```bash
+cargo new katas/abc001
+# → members に追加して src/main.rs に解答を書く
+echo "5" | cargo run -p abc001
+```
+
+## D. 小さなCLIツールを作る
+
+```bash
+cargo new mini-projects/cli-todo
+# → members に追加して Cargo.toml に clap 等の依存を追加
 cargo run -p cli-todo
 ```
 
