@@ -1,5 +1,5 @@
 [workspace]
 members = ["katas/abc001", "mini-projects/cli-todo",
-  "snippets/hello", "snippets/practice",
+  "snippets/hello", "snippets/iterators", "snippets/practice",
 ]
 resolver = "2"
